@@ -1,0 +1,10 @@
+SYSTEM DOSTĘPU PRACOWNIKÓW W MAGAZYNIE
+
+W projekcie zostanie użyty czytnik kart RFID, kontrolowany przez Arduino. Każda karta będzie miała inną rangę dostępu:
+-Karta 1. -> dostęp admina, możliwość przejrzenia i edycji danych pracowników, sprawdzenia w jakich pomieszczeniach się znajdują i jak długo tam są
+-Karta 2. -> dostęp magazyniera, przyłożenie karty uprawnia do wejścia na magazyn i zaczyna liczyć czas jak długo pracownik się tam znajduje, po ponownym przyłożeniu przestaje liczyć czas.
+-Karta 3. -> dostęp praktykanta, karta działa tak samo jak karta magazyniera, z tą różnicą, że po przyłożeniu karty praktykanta, należy przyłożyć też kartę magazyniera i wpisać kod dostępu aby zezwolić praktykantowi na wejście na magazyn
+-Karta 4. -> karta programowalna, po przyłożeniu do czytnika można przypisać jej nowego użytkownika wraz z jego danymi oraz rodzaj dostępu.
+
+Głównym zadaniem programu będzie rozróżnienie każdej z tych kart i wyświetlenie informacji o użytkownikach, które będą domyślnie przypisane (poza kartą programowalną), edycję danych użytkowników z poziomu administratora, zliczanie czasu przebywania na magazynie dla magazyniera i praktykanta, zaprogramowanie nieprzypisanej karty oraz dostęp awaryjny w przypadku zgubienia karty przez któregoś z pracowników.
+

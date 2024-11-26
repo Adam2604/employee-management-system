@@ -8,7 +8,6 @@ void Timer::startTimer()
 {
     start = chrono::steady_clock::now();
     running = true;
-    cout << "Rozpoczeto odliczanie..." << std::endl;
 }
 
 float Timer::stopTimer()

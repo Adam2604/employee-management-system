@@ -9,7 +9,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
     SerialPort serial("COM5");
 
     if (!serial.open())
@@ -29,7 +30,8 @@ int main() {
     string id_karty;
     cout << "Czekam na przylozenie karty..." << endl;
     bool oczekiwanie_na_potwierdzenie_praktykanta = false;
-    while (true) {
+    while (true)
+    {
         if (serial.readData(id_karty))
         {
             if (id_karty == "E0 D2 4A 0E")  // ADMIN

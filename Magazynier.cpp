@@ -24,6 +24,7 @@ void Magazynier::potwierdz_dostep(Praktykant& praktykant)
 
 void Magazynier::rozpocznij_liczenie()
 {
+    cout << "Mozna wejsc na magazyn." << endl;
     timer.startTimer();
 }
 

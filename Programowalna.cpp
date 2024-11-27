@@ -48,20 +48,23 @@ void Programowalna :: wyswietl_dane_programowalnej()
 
 void Programowalna :: powitanie()
 {
-    string odp;
-    cout << "Karta nie przypisana, czy chcesz przypisac karte do pracownika? (tak/nie) ";
-    cin >> odp;
-    if (odp == "tak")
+    if (!przypisana)
     {
-        ustaw_dane_programowalnej();
-    }
-    else if(odp == "nie")
-    {
-        cout << "Anulowano przypisanie karty." << endl;
-    }
-    else
-    {
-        cout << "Nie rozpoznano komendy. Anulowano zadanie." << endl;
+        string odp;
+        cout << "Karta nie przypisana, czy chcesz przypisac karte do pracownika? (tak/nie) ";
+        cin >> odp;
+        if (odp == "tak")
+        {
+            ustaw_dane_programowalnej();
+        }
+        else if (odp == "nie")
+        {
+            cout << "Anulowano przypisanie karty." << endl;
+        }
+        else
+        {
+            cout << "Nie rozpoznano komendy. Anulowano zadanie." << endl;
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 #include "programowalna.h"
 
-Programowalna :: Programowalna(): User() {}
+Programowalna :: Programowalna(): User(), przypisana(false) {}
 
 void Programowalna :: ustaw_dane_programowalnej()
 {
@@ -65,3 +65,7 @@ void Programowalna :: powitanie()
     }
 }
 
+bool Programowalna::czy_przypisana()
+{
+    return przypisana;
+}

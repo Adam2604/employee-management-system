@@ -81,7 +81,7 @@ int main()
             {
                 if (!karta.czy_przypisana())
                 {
-                    karta.powitanie();
+                    karta.powitanie(pracownicy);
                 }
                 else
                 {

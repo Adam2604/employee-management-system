@@ -46,7 +46,7 @@ void Programowalna :: wyswietl_dane_programowalnej()
 }
 
 
-void Programowalna :: powitanie()
+void Programowalna :: powitanie(vector<User*>& pracownicy)
 {
     if (!przypisana)
     {
@@ -56,6 +56,8 @@ void Programowalna :: powitanie()
         if (odp == "tak")
         {
             ustaw_dane_programowalnej();
+            Programowalna* karta = new Programowalna(*this);
+            pracownicy.push_back(karta);
             cout << "Karta zostala przypisana." << endl;
             przypisana = true;
         }

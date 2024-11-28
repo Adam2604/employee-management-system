@@ -72,3 +72,61 @@ bool Programowalna::czy_przypisana()
 {
     return przypisana;
 }
+
+
+void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta, Praktykant& praktykant, Magazynier& magazynier, Admin& admin, vector<User*>& pracownicy)
+{
+    string typ_dostepu = pobierz_dostep();
+    if (typ_dostepu == "admin")
+    {
+        cout << "Dostęp przypisany jako Admin." << endl;
+        admin.wyswietl_dane_admina();
+        admin.wybierz_zadanie(pracownicy);
+    }
+    else if (typ_dostepu == "magazynier")
+    {
+        cout << "Dostęp przypisany jako Magazynier." << endl;
+        if (oczekiwanie_na_potwierdzenie_praktykanta)
+        {
+            magazynier.potwierdz_dostep(praktykant);
+            oczekiwanie_na_potwierdzenie_praktykanta = false;
+        }
+        else
+        {
+            if (!magazynier.czy_liczy())
+            {
+                magazynier.rozpocznij_liczenie();
+            }
+            else
+            {
+                magazynier.zakoncz_liczenie();
+            }
+        }
+    }
+    else if (typ_dostepu == "praktykant")
+    {
+        cout << "Dostęp przypisany jako Praktykant." << endl;
+        if (!praktykant.czy_liczy())
+        {
+            praktykant.wyswietl_dane_praktykanta();
+            praktykant.wniosek_o_dostep();
+            if (!praktykant.czy_oczekuje_na_potwierdzenie())
+            {
+                praktykant.rozpocznij_liczenie();
+            }
+            else
+            {
+                oczekiwanie_na_potwierdzenie_praktykanta = true;
+            }
+        }
+        else
+        {
+            praktykant.wyswietl_dane_praktykanta();
+            praktykant.zakoncz_liczenie();
+        }
+    }
+    else
+    {
+        cout << "Nieznany typ dostępu: " << typ_dostepu << endl;
+    }
+}

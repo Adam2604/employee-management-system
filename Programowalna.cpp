@@ -2,6 +2,18 @@
 
 Programowalna :: Programowalna(): User(), przypisana(false) {}
 
+void Programowalna::wyswietl_dane_karty()
+{
+    wyswietl_imie();
+    cout << " ";
+    wyswietl_nazwisko();
+    cout << " - ";
+    wyswietl_dostep();
+    cout << endl;
+    cout << endl;
+}
+
+
 void Programowalna :: ustaw_dane_programowalnej()
 {
     string imie;
@@ -97,12 +109,12 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
         {
             if (!magazynier.czy_liczy())
             {
-                magazynier.wyswietl_dane_magazyniera();
+                this -> wyswietl_dane_karty();
                 magazynier.rozpocznij_liczenie();
             }
             else
             {
-                magazynier.wyswietl_dane_magazyniera();
+                this -> wyswietl_dane_karty();
                 magazynier.zakoncz_liczenie();
             }
         }
@@ -111,7 +123,7 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     {
         if (!praktykant.czy_liczy())
         {
-            praktykant.wyswietl_dane_praktykanta();
+            this -> wyswietl_dane_karty();
             praktykant.wniosek_o_dostep();
             if (!praktykant.czy_oczekuje_na_potwierdzenie())
             {
@@ -124,7 +136,7 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
         }
         else
         {
-            praktykant.wyswietl_dane_praktykanta();
+            this -> wyswietl_dane_karty();
             praktykant.zakoncz_liczenie();
         }
     }

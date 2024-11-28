@@ -76,7 +76,7 @@ string User :: pobierz_adres()
     return adres;
 }
 
-string User :: pobierz_dostep()
+string User :: pobierz_dostep() const
 {
     return dostep;
 }

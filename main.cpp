@@ -79,12 +79,19 @@ int main()
             }
             else if(id_karty == "04 0E 7B F4")  // KARTA PROGRAMOWALNA
             {
-                karta.powitanie();
+                if (!karta.czy_przypisana())
+                {
+                    karta.powitanie();
+                }
+                else
+                {
+                    karta.obsluz_dostep(oczekiwanie_na_potwierdzenie_praktykanta, praktykant, magazynier, admin, pracownicy);
+                }
             }
             else
             {
                 cout << "Nieznana karta, zamykam dostep.";
-                return 1;
+                return 0;
             }
         }
     }

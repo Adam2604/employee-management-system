@@ -32,7 +32,7 @@ public:
     string pobierz_nazwisko();
     string pobierz_date();
     string pobierz_adres();
-    string pobierz_dostep();
+    string pobierz_dostep() const;
 
     friend ostream& operator <<(ostream &cout,const User &u);
 };

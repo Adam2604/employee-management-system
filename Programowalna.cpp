@@ -56,6 +56,8 @@ void Programowalna :: powitanie()
         if (odp == "tak")
         {
             ustaw_dane_programowalnej();
+            cout << "Karta zostala przypisana." << endl;
+            przypisana = true;
         }
         else if (odp == "nie")
         {
@@ -79,13 +81,11 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     string typ_dostepu = pobierz_dostep();
     if (typ_dostepu == "admin")
     {
-        cout << "Dostęp przypisany jako Admin." << endl;
         admin.wyswietl_dane_admina();
         admin.wybierz_zadanie(pracownicy);
     }
     else if (typ_dostepu == "magazynier")
     {
-        cout << "Dostęp przypisany jako Magazynier." << endl;
         if (oczekiwanie_na_potwierdzenie_praktykanta)
         {
             magazynier.potwierdz_dostep(praktykant);
@@ -95,17 +95,18 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
         {
             if (!magazynier.czy_liczy())
             {
+                magazynier.wyswietl_dane_magazyniera();
                 magazynier.rozpocznij_liczenie();
             }
             else
             {
+                magazynier.wyswietl_dane_magazyniera();
                 magazynier.zakoncz_liczenie();
             }
         }
     }
     else if (typ_dostepu == "praktykant")
     {
-        cout << "Dostęp przypisany jako Praktykant." << endl;
         if (!praktykant.czy_liczy())
         {
             praktykant.wyswietl_dane_praktykanta();

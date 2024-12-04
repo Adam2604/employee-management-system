@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "Serialport.h"
 #include "user.h"
 #include "admin.h"
@@ -6,8 +7,11 @@
 #include "magazynier.h"
 #include "Tryb_awaryjny.h"
 #include "programowalna.h"
+#include "json.hpp"
+#include "Manager_plikow.h"
 
 using namespace std;
+using json = nlohmann::json;
 
 int main()
 {

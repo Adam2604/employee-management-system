@@ -19,4 +19,6 @@ add_executable(Projekt_na_inf main.cpp
         Zegar.cpp
         Zegar.h
         Programowalna.cpp
-        Programowalna.h)
+        Programowalna.h
+        Manager_plikow.cpp
+        Manager_plikow.h)

@@ -186,3 +186,24 @@ void Admin::edytuj_dane_pracownikow(vector<User*> &pracownicy)  // funkcja edytu
         cout << "Nieprawidlowy numer pracownika." << endl;
     }
 }
+
+void Admin::from_json(json& dane)
+{
+    zmien_imie(dane["imie"].get<std::string>());
+    zmien_nazwisko(dane["nazwisko"].get<std::string>());
+    zmien_date(dane["data_urodzenia"].get<std::string>());
+    zmien_adres(dane["adres"].get<std::string>());
+    zmien_dostep(dane["poziom_dostepu"].get<std::string>());
+}
+
+json Admin::to_json()
+{
+    return json{
+            {"typ", "admin"},
+            {"imie", pobierz_imie()},
+            {"nazwisko", pobierz_nazwisko()},
+            {"data_urodzenia", pobierz_date()},
+            {"adres", pobierz_adres()},
+            {"poziom_dostepu", pobierz_dostep()}
+    };
+}

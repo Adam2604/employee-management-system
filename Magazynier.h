@@ -21,7 +21,7 @@ public:
     void rozpocznij_liczenie();
     float zakoncz_liczenie();
     bool czy_liczy();
-    void from_json(json& dane);
+    void from_json(const json& dane);
     json to_json();
 };
 

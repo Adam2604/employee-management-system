@@ -15,6 +15,6 @@ public:
     void wybierz_zadanie(vector<User*> &pracownicy);    // w mainie wytlumaczylem czym jest ten vector
     void wyswietl_dane_pracownikow(vector<User*> &pracownicy);
     void edytuj_dane_pracownikow(vector<User*> &pracownicy);
-    void from_json(json& dane);
+    void from_json(const json& dane);
     json to_json();
 };

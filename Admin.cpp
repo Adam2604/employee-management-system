@@ -187,13 +187,13 @@ void Admin::edytuj_dane_pracownikow(vector<User*> &pracownicy)  // funkcja edytu
     }
 }
 
-void Admin::from_json(json& dane)
+void Admin::from_json(const json& dane)
 {
-    zmien_imie(dane["imie"].get<std::string>());
-    zmien_nazwisko(dane["nazwisko"].get<std::string>());
-    zmien_date(dane["data_urodzenia"].get<std::string>());
-    zmien_adres(dane["adres"].get<std::string>());
-    zmien_dostep(dane["poziom_dostepu"].get<std::string>());
+    zmien_imie(dane["imie"].get<string>());
+    zmien_nazwisko(dane["nazwisko"].get<string>());
+    zmien_date(dane["data_urodzenia"].get<string>());
+    zmien_adres(dane["adres"].get<string>());
+    zmien_dostep(dane["poziom_dostepu"].get<string>());
 }
 
 json Admin::to_json()

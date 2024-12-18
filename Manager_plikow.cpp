@@ -2,11 +2,11 @@
 #include "admin.h"
 #include "praktykant.h"
 #include "magazynier.h"
+#include "programowalna.h"
 #include <fstream>
 
-using namespace std;
 
-vector<User*> Manager_plikow::wczytaj_pracownikow(const std::string& nazwa_pliku)
+vector<User*> Manager_plikow::wczytaj_pracownikow(const string& nazwa_pliku)
 {
     vector<User*> pracownicy;
     ifstream plik(nazwa_pliku);
@@ -19,24 +19,30 @@ vector<User*> Manager_plikow::wczytaj_pracownikow(const std::string& nazwa_pliku
 
         for (const auto& elem : dane)
         {
-            std::string typ = elem["typ"];
+            string typ = elem["typ"];
             if (typ == "admin")
             {
-                auto* admin = new Admin();
+                Admin* admin = new Admin();
                 admin->from_json(elem);
                 pracownicy.push_back(admin);
             }
             else if (typ == "praktykant")
             {
-                auto* praktykant = new Praktykant();
+                Praktykant* praktykant = new Praktykant();
                 praktykant->from_json(elem);
                 pracownicy.push_back(praktykant);
             }
             else if (typ == "magazynier")
             {
-                auto* magazynier = new Magazynier();
+                Magazynier* magazynier = new Magazynier();
                 magazynier->from_json(elem);
                 pracownicy.push_back(magazynier);
+            }
+            else if (typ == "programowalna")
+            {
+                Programowalna* programowalna = new Programowalna();
+                programowalna->from_json(elem);
+                pracownicy.push_back(programowalna);
             }
         }
     }
@@ -44,7 +50,17 @@ vector<User*> Manager_plikow::wczytaj_pracownikow(const std::string& nazwa_pliku
     return pracownicy;
 }
 
-void PlikManager::zapisz_pracownikow(const std::string& nazwa_pliku, const std::vector<User*>& pracownicy)
+bool Manager_plikow::czy_typ_programowalna(const vector<User*>& pracownicy)
+{
+    for (const auto& pracownik : pracownicy) {
+        if (pracownik->pobierz_typ() == "programowalna") {
+            return true; // Znaleziono programowalną kartę
+        }
+    }
+    return false; // Nie znaleziono programowalnej karty
+}
+
+void Manager_plikow::zapisz_pracownikow(const string& nazwa_pliku, const vector<User*>& pracownicy)
 {
     json dane;
     for (const auto& pracownik : pracownicy)
@@ -52,7 +68,7 @@ void PlikManager::zapisz_pracownikow(const std::string& nazwa_pliku, const std::
         dane.push_back(pracownik->to_json());
     }
 
-    std::ofstream plik(nazwa_pliku);
+    ofstream plik(nazwa_pliku);
     if (plik.is_open())
     {
         plik << dane.dump(4); // zapis z wcięciami dla czytelności

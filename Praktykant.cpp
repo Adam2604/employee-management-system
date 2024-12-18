@@ -70,7 +70,7 @@ bool Praktykant::czy_liczy()
     return timer.isRunning();
 }
 
-void Praktykant::from_json(json& dane)
+void Praktykant::from_json(const json& dane)
 {
     zmien_imie(dane["imie"].get<string>());
     zmien_nazwisko(dane["nazwisko"].get<string>());

@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include "json.hpp"
+
+using json = nlohmann::json;
 using namespace std;
 
 class User
@@ -10,6 +13,7 @@ private:
     string data;
     string adres;
     string dostep;
+    string typ;
 
 public:
     User();
@@ -32,7 +36,11 @@ public:
     string pobierz_nazwisko();
     string pobierz_date();
     string pobierz_adres();
-    string pobierz_dostep() const;
+    string pobierz_dostep();
+    string pobierz_typ();
+
+    virtual void from_json(const json& dane)=0;
+    virtual json to_json()=0;
 
     friend ostream& operator <<(ostream &cout,const User &u);
 };

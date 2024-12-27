@@ -1,9 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include "admin.h"
 #include "user.h"
 #include "praktykant.h"
 #include "zegar.h"
+#include "json.hpp"
+
+using namespace std;
+using json = nlohmann::json;
 
 class Magazynier : public User
 {
@@ -16,5 +21,7 @@ public:
     void rozpocznij_liczenie();
     float zakoncz_liczenie();
     bool czy_liczy();
+    void from_json(const json& dane);
+    json to_json();
 };
 

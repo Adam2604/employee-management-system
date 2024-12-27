@@ -76,9 +76,14 @@ string User :: pobierz_adres()
     return adres;
 }
 
-string User :: pobierz_dostep() const
+string User :: pobierz_dostep()
 {
     return dostep;
+}
+
+string User :: pobierz_typ()
+{
+    return typ;
 }
 
 ostream& operator <<(ostream &cout, const User &u) // Przeci¹¿enie operatora <<

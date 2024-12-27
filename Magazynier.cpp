@@ -37,3 +37,24 @@ bool Magazynier::czy_liczy()
 {
     return timer.isRunning();
 }
+
+void Magazynier::from_json(const json& dane)
+{
+    zmien_imie(dane["imie"].get<string>());
+    zmien_nazwisko(dane["nazwisko"].get<string>());
+    zmien_date(dane["data_urodzenia"].get<string>());
+    zmien_adres(dane["adres"].get<string>());
+    zmien_dostep(dane["poziom_dostepu"].get<string>());
+}
+
+json Magazynier::to_json()
+{
+    return json{
+                {"typ", "magazynier"},
+                {"imie", pobierz_imie()},
+                {"nazwisko", pobierz_nazwisko()},
+                {"data_urodzenia", pobierz_date()},
+                {"adres", pobierz_adres()},
+                {"poziom_dostepu", pobierz_dostep()}
+    };
+}

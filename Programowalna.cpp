@@ -1,8 +1,8 @@
 #include "programowalna.h"
 
-Programowalna :: Programowalna(): User(), przypisana(false) {}
+Programowalna :: Programowalna(): User() {}
 
-void Programowalna::wyswietl_dane_karty()
+void Programowalna::wyswietl_dane_karty_powitanie()
 {
     wyswietl_imie();
     cout << " ";
@@ -72,6 +72,8 @@ void Programowalna :: powitanie(vector<User*>& pracownicy)
             pracownicy.push_back(karta);
             cout << "Karta zostala przypisana." << endl;
             przypisana = true;
+
+            Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
         }
         else if (odp == "nie")
         {
@@ -84,6 +86,7 @@ void Programowalna :: powitanie(vector<User*>& pracownicy)
     }
 }
 
+
 bool Programowalna::czy_przypisana()
 {
     return przypisana;
@@ -95,7 +98,7 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     string typ_dostepu = pobierz_dostep();
     if (typ_dostepu == "admin")
     {
-        admin.wyswietl_dane_admina();
+        this -> wyswietl_dane_karty_powitanie();
         admin.wybierz_zadanie(pracownicy);
     }
     else if (typ_dostepu == "magazynier")
@@ -109,12 +112,12 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
         {
             if (!magazynier.czy_liczy())
             {
-                this -> wyswietl_dane_karty();
+                this -> wyswietl_dane_karty_powitanie();
                 magazynier.rozpocznij_liczenie();
             }
             else
             {
-                this -> wyswietl_dane_karty();
+                this -> wyswietl_dane_karty_powitanie();
                 magazynier.zakoncz_liczenie();
             }
         }
@@ -123,7 +126,7 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     {
         if (!praktykant.czy_liczy())
         {
-            this -> wyswietl_dane_karty();
+            this -> wyswietl_dane_karty_powitanie();
             praktykant.wniosek_o_dostep();
             if (!praktykant.czy_oczekuje_na_potwierdzenie())
             {
@@ -136,7 +139,7 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
         }
         else
         {
-            this -> wyswietl_dane_karty();
+            this -> wyswietl_dane_karty_powitanie();
             praktykant.zakoncz_liczenie();
         }
     }
@@ -144,4 +147,34 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     {
         cout << "Nieznany typ dostępu: " << typ_dostepu << endl;
     }
+}
+
+void Programowalna::ustaw_przypisanie(bool stan)
+{
+    przypisana = stan;
+}
+
+
+void Programowalna::from_json(const json& dane)
+{
+    zmien_imie(dane["imie"].get<string>());
+    zmien_nazwisko(dane["nazwisko"].get<string>());
+    zmien_date(dane["data_urodzenia"].get<string>());
+    zmien_adres(dane["adres"].get<string>());
+    zmien_dostep(dane["poziom_dostepu"].get<string>());
+    przypisana = dane.value("przypisana", false);
+}
+
+
+json Programowalna::to_json()
+{
+    return json{
+                {"typ", "programowalna"},
+                {"imie", pobierz_imie()},
+                {"nazwisko", pobierz_nazwisko()},
+                {"data_urodzenia", pobierz_date()},
+                {"adres", pobierz_adres()},
+                {"poziom_dostepu", pobierz_dostep()},
+                {"przypisana", przypisana}
+    };
 }

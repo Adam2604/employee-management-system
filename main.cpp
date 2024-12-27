@@ -21,18 +21,45 @@ int main()
     {
         return 1;
     }
-    vector<User*> pracownicy;   //jest to tablica dynamiczna, najlatwiejszy sposob na zapisanie naszych danych jednoczesnie bez zbednego rezerwowania duzej ilosci pamieci
+    vector<User*> pracownicy = Manager_plikow::wczytaj_pracownikow("pracownicy.json");
+
     Admin admin;
     Praktykant praktykant;
     Magazynier magazynier;
     Programowalna karta;
 
-    pracownicy.push_back(&admin);
-    pracownicy.push_back(&praktykant);
-    pracownicy.push_back(&magazynier);
+    bool admin_exists = false;
+    bool praktykant_exists = false;
+    bool magazynier_exists = false;
+
+    for (auto& pracownik : pracownicy)
+    {
+        if (pracownik->pobierz_dostep() == admin.pobierz_dostep())
+            admin_exists = true;
+        if (pracownik->pobierz_dostep() == praktykant.pobierz_dostep())
+            praktykant_exists = true;
+        if (pracownik->pobierz_dostep() == magazynier.pobierz_dostep())
+            magazynier_exists = true;
+        if (pracownik->pobierz_typ() == karta.pobierz_typ())
+        {
+            Programowalna* karta_programowalna = dynamic_cast<Programowalna*>(pracownik);
+            if (karta_programowalna)
+            {
+                karta = *karta_programowalna;
+            }
+        }
+    }
+
+    if (!admin_exists)
+        pracownicy.push_back(&admin);
+    if (!praktykant_exists)
+        pracownicy.push_back(&praktykant);
+    if (!magazynier_exists)
+        pracownicy.push_back(&magazynier);
 
     string id_karty;
     cout << "Czekam na przylozenie karty..." << endl;
+
     bool oczekiwanie_na_potwierdzenie_praktykanta = false;
     while (true)
     {
@@ -42,6 +69,7 @@ int main()
             {
                 admin.wyswietl_dane_admina();
                 admin.wybierz_zadanie(pracownicy);
+                Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
             }
             else if(id_karty == "61 0E E3 0C")  // MAGAZYNIER
             {
@@ -86,6 +114,7 @@ int main()
                 if (!karta.czy_przypisana())
                 {
                     karta.powitanie(pracownicy);
+                    karta.ustaw_przypisanie(true);
                 }
                 else
                 {

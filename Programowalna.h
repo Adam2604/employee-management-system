@@ -19,6 +19,7 @@ public:
     void ustaw_dane_programowalnej();
     void powitanie(vector<User*>& pracownicy);
     bool czy_przypisana();
+    void ustaw_przypisanie(bool stan);
     void from_json(const json& dane) override;
     json to_json() override;
 };

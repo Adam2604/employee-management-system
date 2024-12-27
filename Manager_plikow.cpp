@@ -50,15 +50,6 @@ vector<User*> Manager_plikow::wczytaj_pracownikow(const string& nazwa_pliku)
     return pracownicy;
 }
 
-bool Manager_plikow::czy_typ_programowalna(const vector<User*>& pracownicy)
-{
-    for (const auto& pracownik : pracownicy) {
-        if (pracownik->pobierz_typ() == "programowalna") {
-            return true; // Znaleziono programowalną kartę
-        }
-    }
-    return false; // Nie znaleziono programowalnej karty
-}
 
 void Manager_plikow::zapisz_pracownikow(const string& nazwa_pliku, const vector<User*>& pracownicy)
 {

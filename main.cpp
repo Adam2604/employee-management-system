@@ -40,6 +40,14 @@ int main()
             praktykant_exists = true;
         if (pracownik->pobierz_dostep() == magazynier.pobierz_dostep())
             magazynier_exists = true;
+        if (pracownik->pobierz_typ() == karta.pobierz_typ())
+        {
+            Programowalna* karta_programowalna = dynamic_cast<Programowalna*>(pracownik);
+            if (karta_programowalna)
+            {
+                karta = *karta_programowalna;
+            }
+        }
     }
 
     if (!admin_exists)
@@ -106,6 +114,7 @@ int main()
                 if (!karta.czy_przypisana())
                 {
                     karta.powitanie(pracownicy);
+                    karta.ustaw_przypisanie(true);
                 }
                 else
                 {

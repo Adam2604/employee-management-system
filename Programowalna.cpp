@@ -1,6 +1,6 @@
 #include "programowalna.h"
 
-Programowalna :: Programowalna(): User(), przypisana(false) {}
+Programowalna :: Programowalna(): User() {}
 
 void Programowalna::wyswietl_dane_karty_powitanie()
 {
@@ -86,6 +86,7 @@ void Programowalna :: powitanie(vector<User*>& pracownicy)
     }
 }
 
+
 bool Programowalna::czy_przypisana()
 {
     return przypisana;
@@ -148,6 +149,12 @@ void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta
     }
 }
 
+void Programowalna::ustaw_przypisanie(bool stan)
+{
+    przypisana = stan;
+}
+
+
 void Programowalna::from_json(const json& dane)
 {
     zmien_imie(dane["imie"].get<string>());
@@ -155,6 +162,7 @@ void Programowalna::from_json(const json& dane)
     zmien_date(dane["data_urodzenia"].get<string>());
     zmien_adres(dane["adres"].get<string>());
     zmien_dostep(dane["poziom_dostepu"].get<string>());
+    przypisana = dane.value("przypisana", false);
 }
 
 
@@ -166,6 +174,7 @@ json Programowalna::to_json()
                 {"nazwisko", pobierz_nazwisko()},
                 {"data_urodzenia", pobierz_date()},
                 {"adres", pobierz_adres()},
-                {"poziom_dostepu", pobierz_dostep()}
+                {"poziom_dostepu", pobierz_dostep()},
+                {"przypisana", przypisana}
     };
 }

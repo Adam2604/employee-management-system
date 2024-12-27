@@ -65,40 +65,45 @@ int main()
     {
         if (serial.readData(id_karty))
         {
-            if (id_karty == "E0 D2 4A 0E")  // ADMIN
+            if (id_karty == "AWARYJNY") // NACIŚNIĘCIE PRZYCISKU
+            {
+                Dostep_awaryjny tryb_awaryjny(pracownicy);
+                tryb_awaryjny.uzyskaj_dostep();
+            }
+            else if (id_karty == "E0 D2 4A 0E")  // ADMIN
             {
                 admin.wyswietl_dane_admina();
                 admin.wybierz_zadanie(pracownicy);
                 Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
             }
-            else if(id_karty == "61 0E E3 0C")  // MAGAZYNIER
+            else if (id_karty == "61 0E E3 0C")  // MAGAZYNIER
             {
-                if(oczekiwanie_na_potwierdzenie_praktykanta)    // jezeli praktykant poprosi o dostep to sie to stanie
+                if (oczekiwanie_na_potwierdzenie_praktykanta)
                 {
                     magazynier.potwierdz_dostep(praktykant);
                     oczekiwanie_na_potwierdzenie_praktykanta = false;
                 }
                 else
                 {
-                    if(!magazynier.czy_liczy()) // Jezeli nie rozpoczelo sie mierzenie czasu to wlasnie zacznie
+                    if (!magazynier.czy_liczy())
                     {
                         magazynier.wyswietl_dane_magazyniera();
                         magazynier.rozpocznij_liczenie();
                     }
-                    else                        // A jezeli czas juz byl mierzony to zakonczy sie i zostanie to potraktowane jako wyjscie z magazynu
+                    else
                     {
                         magazynier.wyswietl_dane_magazyniera();
                         magazynier.zakoncz_liczenie();
                     }
                 }
             }
-            else if(id_karty == "A4 AD BA F3")  // PRAKTYKANT
+            else if (id_karty == "A4 AD BA F3")  // PRAKTYKANT
             {
-                if(!praktykant.czy_liczy())
+                if (!praktykant.czy_liczy())
                 {
                     praktykant.wyswietl_dane_praktykanta();
                     praktykant.wniosek_o_dostep();
-                    if(praktykant.czy_oczekuje_na_potwierdzenie())  // Uruchamiamy liczenie tylko, jeœli oczekuje na potwierdzenie
+                    if (praktykant.czy_oczekuje_na_potwierdzenie())
                     {
                         oczekiwanie_na_potwierdzenie_praktykanta = true;
                     }
@@ -109,7 +114,7 @@ int main()
                     praktykant.zakoncz_liczenie();
                 }
             }
-            else if(id_karty == "04 0E 7B F4")  // KARTA PROGRAMOWALNA
+            else if (id_karty == "04 0E 7B F4")  // KARTA PROGRAMOWALNA
             {
                 if (!karta.czy_przypisana())
                 {
@@ -123,7 +128,7 @@ int main()
             }
             else
             {
-                cout << "Nieznana karta, zamykam dostep.";
+                cout << "Nieznana karta, zamykam dostep." << endl;
                 return 0;
             }
         }

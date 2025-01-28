@@ -122,6 +122,10 @@ void Admin::edytuj_dane_pracownikow(vector<User*> &pracownicy)  // funkcja edytu
                 }
             case 5:
                 {
+                    if (pobierz_dostep() == "ADMIN") {
+                        cout << "Nie mozna zmienic dostepu dla admina" << endl;
+                        break;
+                    }
                     string nowy_dostep;
                     cout << "Podaj nowy poziom dostepu: ";
                     cin >> nowy_dostep;

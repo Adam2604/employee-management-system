@@ -61,6 +61,8 @@ int main()
     cout << "Czekam na przylozenie karty..." << endl;
 
     bool oczekiwanie_na_potwierdzenie_praktykanta = false;
+    bool oczekiwanie_na_przypisanie = false;
+    Programowalna* karta_do_przypisania = nullptr;
     while (true)
     {
         if (serial.readData(id_karty))
@@ -72,15 +74,27 @@ int main()
             }
             else if (id_karty == "E0 D2 4A 0E")  // ADMIN
             {
-                admin.wyswietl_dane_admina();
-                admin.wybierz_zadanie(pracownicy);
-                Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
+                if (oczekiwanie_na_przypisanie && karta_do_przypisania) {
+                    cout << "Operacja zatwierdzona, mozna kontynuowac." << endl;
+                    karta_do_przypisania->ustaw_przypisanie(true);
+                    karta_do_przypisania->ustaw_dane_programowalnej(pracownicy);
+                    pracownicy.push_back(karta_do_przypisania);
+                    Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
+                    karta_do_przypisania = nullptr;
+                    oczekiwanie_na_przypisanie = false;
+                }
+                else {
+                    admin.wyswietl_dane_admina();
+                    admin.wybierz_zadanie(pracownicy);
+                    Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
+                }
             }
             else if (id_karty == "61 0E E3 0C")  // MAGAZYNIER
             {
                 if (oczekiwanie_na_potwierdzenie_praktykanta)
                 {
                     magazynier.potwierdz_dostep(praktykant);
+                    praktykant.sprawdzCzasPrzybycia("pracownicy.json");
                     oczekiwanie_na_potwierdzenie_praktykanta = false;
                 }
                 else
@@ -118,8 +132,14 @@ int main()
             {
                 if (!karta.czy_przypisana())
                 {
-                    karta.powitanie(pracownicy);
-                    karta.ustaw_przypisanie(true);
+                    if (oczekiwanie_na_przypisanie) {
+                        cout << "Konieczne zatwierdzenie przez administratora." << endl;
+                    }
+                    else {
+                        cout << "Karta nie przypisana. Aby to zrobic konieczne jest zatwierdzenie przez administratora." << endl;
+                        karta_do_przypisania = &karta;
+                        oczekiwanie_na_przypisanie = true;
+                    }
                 }
                 else
                 {

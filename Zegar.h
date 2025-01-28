@@ -1,8 +1,12 @@
 #pragma once
 #include <iostream>
 #include <chrono>
+#include <fstream>
+#include <ctime>
+#include "json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 class Timer {
 private:
@@ -15,4 +19,5 @@ public:
     void startTimer();
     float stopTimer();
     bool isRunning();
+    bool isLate(const std::string& jsonPath);
 };

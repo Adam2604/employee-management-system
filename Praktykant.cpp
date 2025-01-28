@@ -87,6 +87,20 @@ json Praktykant::to_json()
                     {"nazwisko", pobierz_nazwisko()},
                     {"data_urodzenia", pobierz_date()},
                     {"adres", pobierz_adres()},
-                    {"poziom_dostepu", pobierz_dostep()}
+                    {"poziom_dostepu", pobierz_dostep()},
+                    {"godzina_przybycia", "10:00"}
+
     };
+}
+
+void Praktykant::sprawdzCzasPrzybycia(const std::string& jsonPath)
+{
+    if (timer.isLate(jsonPath))
+    {
+        cout << "Spozniles sie do pracy!" << endl;
+    }
+    else
+    {
+        cout << "Jestes na czas." << endl;
+    }
 }

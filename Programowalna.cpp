@@ -2,6 +2,9 @@
 
 Programowalna :: Programowalna(): User() {}
 
+Magazynier magazynier2;
+Praktykant praktykant2;
+Admin admin2;
 void Programowalna::wyswietl_dane_karty_powitanie()
 {
     wyswietl_imie();
@@ -14,7 +17,7 @@ void Programowalna::wyswietl_dane_karty_powitanie()
 }
 
 
-void Programowalna :: ustaw_dane_programowalnej()
+void Programowalna :: ustaw_dane_programowalnej(vector<User*>& pracownicy)
 {
     string imie;
     cout << "Podaj imie: ";
@@ -38,9 +41,14 @@ void Programowalna :: ustaw_dane_programowalnej()
     zmien_adres(adres);
 
     string dostep;
-    cout << "Podaj dostep: ";
-    cin >> dostep;
+    do {
+        cout << "Podaj dostep(magazynier lub praktykant): ";
+        cin >> dostep;
+    }while (dostep != "magazynier" && dostep != "praktykant");
     zmien_dostep(dostep);
+
+    Manager_plikow::zapisz_pracownikow("pracownicy.json", pracownicy);
+    cout << "Karta zostala przypisana" << endl;
 }
 
 void Programowalna :: wyswietl_dane_programowalnej()
@@ -67,7 +75,6 @@ void Programowalna :: powitanie(vector<User*>& pracownicy)
         cin >> odp;
         if (odp == "tak")
         {
-            ustaw_dane_programowalnej();
             Programowalna* karta = new Programowalna(*this);
             pracownicy.push_back(karta);
             cout << "Karta zostala przypisana." << endl;
@@ -96,29 +103,24 @@ bool Programowalna::czy_przypisana()
 void Programowalna::obsluz_dostep(bool& oczekiwanie_na_potwierdzenie_praktykanta, Praktykant& praktykant, Magazynier& magazynier, Admin& admin, vector<User*>& pracownicy)
 {
     string typ_dostepu = pobierz_dostep();
-    if (typ_dostepu == "admin")
-    {
-        this -> wyswietl_dane_karty_powitanie();
-        admin.wybierz_zadanie(pracownicy);
-    }
-    else if (typ_dostepu == "magazynier")
+    if (typ_dostepu == "magazynier")
     {
         if (oczekiwanie_na_potwierdzenie_praktykanta)
         {
-            magazynier.potwierdz_dostep(praktykant);
+            magazynier2.potwierdz_dostep(praktykant);
             oczekiwanie_na_potwierdzenie_praktykanta = false;
         }
         else
         {
-            if (!magazynier.czy_liczy())
+            if (!magazynier2.czy_liczy())
             {
                 this -> wyswietl_dane_karty_powitanie();
-                magazynier.rozpocznij_liczenie();
+                magazynier2.rozpocznij_liczenie();
             }
             else
             {
                 this -> wyswietl_dane_karty_powitanie();
-                magazynier.zakoncz_liczenie();
+                magazynier2.zakoncz_liczenie();
             }
         }
     }

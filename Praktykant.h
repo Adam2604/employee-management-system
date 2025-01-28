@@ -25,4 +25,5 @@ public:
     bool czy_liczy();
     void from_json(const json& dane);
     json to_json();
+    void sprawdzCzasPrzybycia(const string& jsonPath);
 };

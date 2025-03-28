@@ -1,0 +1,1 @@
+This project was done by a 4-person team. Its aim was to create a system that would allow managing employee access to the warehouse. For this purpose, a card reader made using Arduino and RFID cards was used. The card reader was connected to a program written in C++, which allowed to distinguish employee access based on the card they used
